@@ -9,15 +9,15 @@
 
 @interface Film: NSObject
 
-@property int *Id;
+@property (nonatomic, assign) int Id;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *trama;
-@property int *year;
-@property int *durata;
+@property (nonatomic, assign) int year;
+@property (nonatomic, assign) int durata;
 @property (strong, nonatomic) NSString *cover;
-@property int *coverW;
-@property int *coverH;
-@property (strong, nonatomic) NSData *data;
-@property int *cat;
+@property (nonatomic, assign) int coverW;
+@property (nonatomic, assign) int coverH;
+@property (strong, nonatomic) NSDate * data;
+@property (nonatomic, assign) int cat;
 @property (strong, nonatomic) NSString *genere;
 @end

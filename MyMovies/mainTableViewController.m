@@ -17,6 +17,7 @@
 @implementation mainTableViewController
 @synthesize films;
 //@synthesize managedObjectContext;
+@synthesize Progress;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -30,9 +31,49 @@
 - (void)viewDidLoad
 {
    [super viewDidLoad];
+    [self LoadData];
+
+}
+
+- (void)LoadData{
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    //NSManagedObjectContext *context = [self managedObjectContext];
+    self.navigationController.toolbarHidden = NO;
+    [self.storyboard instantiateViewControllerWithIdentifier:@"TVC"];
+    self.Progress.progress = 0.0;
+    NSURL *url = [NSURL URLWithString:@"http://centcom:81/MyMoviesWS/MyMovies.svc/GetAllFilmsInJson"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setTimeoutInterval: 20.0]; // Will timeout after 10 seconds
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue currentQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               
+                               if (data != nil && error == nil)
+                               {
+                                   self.Progress.hidden = FALSE;
+                                   
+                                   [self performSelectorInBackground:@selector(fetchedData:) withObject:data];
+                                   
+                               }
+                               else
+                               {
+                                   // There was an error, alert the user
+                                   UIAlertView *errSyncAlert = [[UIAlertView alloc]
+                                                                initWithTitle:@"ERROR" message:@"Error during synchronization" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                   
+                                   // Display the Hello World Message
+                                   [errSyncAlert show];
+                                   [self fillTableView];
+                                   
+                               }
+                               
+                           }];
+
+}
+
+
+- (void)fillTableView
+{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     AppDelegate *appDelegate =
     [[UIApplication sharedApplication] delegate];
@@ -46,7 +87,7 @@
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
     NSError *error;
     NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
-     NSMutableArray *filmsTMP = [[NSMutableArray alloc] initWithCapacity:[items count]];
+    NSMutableArray *filmsTMP = [[NSMutableArray alloc] initWithCapacity:[items count]];
     for (NSManagedObject *info in items) {
         Film *f = [[Film alloc] init];
         f.Id = [[info valueForKey:@"intId"] intValue];
@@ -57,10 +98,6 @@
         f.cover = [info valueForKey:@"nvcCover"];
         f.coverW = [[info valueForKey:@"intCoverWidth"] intValue];
         f.coverH = [[info valueForKey:@"intCoverHeight"] intValue];
-       // NSString *theDate = [info valueForKey:@"datDataChanged"];
-       // NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-       // [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss CET"];
-       // f.data = [formatter dateFromString:theDate];
         f.cat= [[info valueForKey:@"intAddType"] intValue];
         f.genere = [info valueForKey:@"nvcGenrs"];
         [filmsTMP addObject:f];
@@ -69,6 +106,47 @@
     [self.tableView reloadData];
 }
 
+- (void)fillTableViewOn
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    AppDelegate *appDelegate =
+    [[UIApplication sharedApplication] delegate];
+     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"intAddType == 3"];
+    
+    [fetchRequest setPredicate:predicate];
+    
+    
+    NSManagedObjectContext *context =
+    [appDelegate managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Titles" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+                              initWithKey:@"nvcLocalTitle" ascending:YES];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
+    NSError *error;
+    NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
+    NSMutableArray *filmsTMP = [[NSMutableArray alloc] initWithCapacity:[items count]];
+    for (NSManagedObject *info in items) {
+        Film *f = [[Film alloc] init];
+        f.Id = [[info valueForKey:@"intId"] intValue];
+        f.title = [info valueForKey:@"nvcLocalTitle"];
+        f.trama = [info valueForKey:@"ntxDescription"];
+        f.year = [[info valueForKey:@"intProductionYear"] intValue];
+        f.durata = [[info valueForKey:@"intRuntime"] intValue];
+        f.cover = [info valueForKey:@"nvcCover"];
+        f.coverW = [[info valueForKey:@"intCoverWidth"] intValue];
+        f.coverH = [[info valueForKey:@"intCoverHeight"] intValue];
+        // NSString *theDate = [info valueForKey:@"datDataChanged"];
+        // NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        // [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss CET"];
+        // f.data = [formatter dateFromString:theDate];
+        f.cat= [[info valueForKey:@"intAddType"] intValue];
+        f.genere = [info valueForKey:@"nvcGenrs"];
+        [filmsTMP addObject:f];
+    }
+    self.films = [filmsTMP copy]; //6
+    [self.tableView reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -76,144 +154,200 @@
     // Dispose of any resources that can be recreated.
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 150;
+    return 70;
 }
-#pragma mark - Table view data source
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
+
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
+
     return [self.films count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // static NSString *CellIdentifier = @"Cell";
-    static NSString *cellIdentifier = @"TableCellID";
-       // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-   // if (cell == nil) {
-   //     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-   // }
+
+    static NSString *cellIdentifier = @"Cell";
     TableCell *cell = (TableCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.delegate = self;
 
     if (cell == nil)
     {
-      // NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"Cell" owner:self options:nil];
-      // cell = [nib objectAtIndex:0];
+ 
        cell = [[TableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        cell.cellTitle = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 220.0, 15.0)];
-       cell.cellTitle.font = [UIFont systemFontOfSize:14.0];
-        cell.cellTitle.textAlignment = UITextAlignmentLeft;
-       cell.cellTitle.textColor = [UIColor blackColor];
-        cell.cellTitle.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
-        [cell.contentView addSubview:cell.cellTitle];
-        
-        cell.cellDescr = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 20.0, 220.0, 25.0)];
-        cell.cellDescr.font = [UIFont systemFontOfSize:12.0];
-        cell.cellDescr.textAlignment = UITextAlignmentLeft;
-        cell.cellDescr.textColor = [UIColor darkGrayColor];
-        cell.cellDescr.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleHeight;
-        [cell.contentView addSubview:cell.cellDescr];
-
+    
     }
     cell.cellTitle.text = [[films objectAtIndex:indexPath.row] title];
-    //cell.textLabel.font=[UIFont fontWithName:@"Arial Rounded MT Bold" size:10.0];
-    Film * f = [films objectAtIndex:indexPath.row];
-    // Configure the cell...
+      Film * f = [films objectAtIndex:indexPath.row];
     NSString *detail =[NSString stringWithFormat:@"%ld",  (long)f.year];
     detail = [detail stringByAppendingString:@" "];
     detail = [detail stringByAppendingString:f.genere];
     cell.cellDescr.text = detail;
-    //enrica
     NSString * imagesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *imagesExt = @".jpg";
     NSString *imageName  = [NSString stringWithFormat:@"%@%@%@%@", imagesPath, @"/",f.cover, imagesExt];
-    UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(cell.contentView.frame.origin.x, cell.contentView.frame.origin.y, cell.contentView.frame.size.width, cell.contentView.frame.size.height)];
-    imageView.image = [UIImage imageNamed:imageName];
-   // cell.cellImage.image = imageView.image;
-   //  cell.cellImage.image = imageView.image;
-    //[cell.contentView addSubview:imageView];
-    //enricafine
+   UIImage *thumbNail = [UIImage imageWithContentsOfFile:imageName];
+    cell.cellImage.image = thumbNail;
+    NSString *StatusImg = @"";
+    if(f.cat == 3)
+        StatusImg = @"green.png";
+    else
+        StatusImg = @"red.png";
+    UIImage *Status = [UIImage imageNamed:StatusImg];
+    cell.statusImage.image = Status;
     return cell;
 }
-
-/*-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-    Film *f = [self.films objectAtIndex:indexPath.row];
-    DetailedViewController *dvc = (DetailedViewController *)[segue destinationViewController];
-    [dvc setFilm:f]; //4
-}*/
-/*-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    DetailedViewController *dvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailedViewController"];
-    dvc.film = [self.films objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:dvc animated:YES];
-}*/
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DetailVC *dvc = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
-     Film *f = [[Film alloc] init];
-     f = [self.films objectAtIndex:indexPath.row];
-    dvc.film = f;
+    dvc.film = [self.films objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:dvc animated:YES];
 }
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)ClickSyncButton:(id)sender{
+    self.Progress.progress = 0.0;
+    [self LoadData];
 }
 
- */
+
+- (IBAction)ClickAllButton:(id)sender{
+    [self fillTableView];
+}
+
+- (IBAction)ClickOnButton:(id)sender{
+    [self fillTableViewOn];
+
+}
+
+
+- (void) deleteAllObjects: (NSString *) entityDescription  {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    AppDelegate *appDelegate =
+    [[UIApplication sharedApplication] delegate];
+    
+    NSManagedObjectContext *context =
+    [appDelegate managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
+    for (NSManagedObject *managedObject in items) {
+    	[context deleteObject:managedObject];
+    }
+    if (![context save:&error]) {
+    	
+    }
+    
+}
+
+- (void)fetchedData:(NSData *)responseData {
+    
+    [self deleteAllObjects:@"Titles"];
+    NSArray* json = [NSJSONSerialization
+                     JSONObjectWithData:responseData //1
+                     options:kNilOptions error:nil];
+    AppDelegate *appDelegate =
+    [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context =
+    [appDelegate managedObjectContext];
+    
+    int total = [json count];
+    int progress  = 0;
+    self.SyncButton.enabled = NO;
+    // enrica
+    NSString * documentsDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    //enrica fine
+    for (NSDictionary *dict in json) { //3
+        
+        NSNumber *prog = [[NSNumber alloc] initWithFloat:((float)progress / (float)total)];
+        [self performSelectorOnMainThread:@selector(updateProgressBar:) withObject:prog waitUntilDone:NO];
+        progress = progress + 1;
+        
+        Film *f = [[Film alloc] init]; //4
+        NSManagedObject *newTitle;
+        newTitle = [NSEntityDescription
+                    insertNewObjectForEntityForName:@"Titles"
+                    inManagedObjectContext:context];
+        f.Id = [[dict objectForKey:@"Id"] intValue];
+        [newTitle setValue: [NSNumber numberWithInt:f.Id] forKey:@"intId"];
+        f.title         = [dict objectForKey:@"LocalTitle"];
+        [newTitle setValue: f.title forKey:@"nvcLocalTitle"];
+        f.trama =[dict objectForKey:@"Trama"];
+        [newTitle setValue: f.trama forKey:@"ntxDescription"];
+        f.year = [[dict objectForKey:@"Anno"] intValue];
+        [newTitle setValue: [NSNumber numberWithInt:f.year] forKey:@"intProductionYear"];
+        f.durata = [[dict objectForKey:@"Durata"] intValue];
+        [newTitle setValue: [NSNumber numberWithInt:f.durata] forKey:@"intRuntime"];
+        f.cover =[dict objectForKey:@"Cover"];
+        [newTitle setValue: f.cover forKey:@"nvcCover"];
+        f.coverW = [[dict objectForKey:@"CoverW"] intValue];
+        [newTitle setValue: [NSNumber numberWithInt:f.coverW] forKey:@"intCoverWidth"];
+        f.coverH = [[dict objectForKey:@"CoverH"] intValue];
+        [newTitle setValue: [NSNumber numberWithInt:f.coverH] forKey:@"intCoverHeight"];
+        NSString *theDate = [dict objectForKey:@"InsertDate"];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"dd/MM/yyyy HH:mm:ss"];//07/09/2011 08:21:08
+        f.data = [formatter dateFromString:theDate];
+        [newTitle setValue: f.data forKey:@"datDataChanged"];
+        f.cat= [[dict objectForKey:@"Gruppo"] intValue];
+        [newTitle setValue: [NSNumber numberWithInt:f.cat] forKey:@"intAddType"];
+        f.genere         = [dict objectForKey:@"Generi"];
+        [newTitle setValue: f.genere forKey:@"nvcGenrs"];
+        //enrica
+        
+        NSString *imagesPath = @"http://centcom:81/Covers/";
+        NSString *imagesExt = @".jpg";
+        NSString * localImagePathName= [NSString stringWithFormat:@"%@%@%@%@", documentsDirectoryPath, @"/",f.cover, imagesExt];
+        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:localImagePathName];
+        if (!fileExists) {
+            
+            //Get Image From URL
+            NSString *imageName  = [NSString stringWithFormat:@"%@%@%@", imagesPath, f.cover, imagesExt];
+            UIImage * coverFromURL = [self getCoverFromURL:imageName];
+            //Save Image to Directory
+            [self saveCover: coverFromURL withFileName:f.cover ofType:@"jpg" inDirectory:documentsDirectoryPath];
+            
+        }
+    }
+    UIAlertView *syncDoneAlert = [[UIAlertView alloc]
+                                  initWithTitle:@"Synchronizing" message:@"Synchronization done" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    self.SyncButton.enabled = YES;
+    self.Progress.hidden = TRUE;
+    [self fillTableView];
+    // Display the Hello World Message
+    [syncDoneAlert show];
+    
+}
+
+-(UIImage *) getCoverFromURL:(NSString *)fileURL {
+    UIImage * result;
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    result = [UIImage imageWithData:data];
+    
+    return result;
+}
+// SAVE COVER IN LOCAL FILE SYSTEM
+-(void) saveCover:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath {
+    if ([[extension lowercaseString] isEqualToString:@"png"]) {
+        [UIImagePNGRepresentation(image) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]] options:NSAtomicWrite error:nil];
+    } else if ([[extension lowercaseString] isEqualToString:@"jpg"] || [[extension lowercaseString] isEqualToString:@"jpeg"]) {
+        [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
+    } else {
+        //   ALog(@"Image Save Failed\nExtension: (%@) is not recognized, use (PNG/JPG)", extension);
+    }
+}
+
+- (void)updateProgressBar: (NSNumber *) prognum {
+    self.Progress.progress = [prognum floatValue];
+}
+
+
 
 @end

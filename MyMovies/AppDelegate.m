@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  DBStory
+//  MyMovies
 //
 //  Created by Riccardo Faveto on 17/10/13.
 //  Copyright (c) 2013 Riccardo Faveto. All rights reserved.

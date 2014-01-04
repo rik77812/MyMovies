@@ -11,7 +11,8 @@
 @implementation TableCell
 @synthesize cellTitle = _cellTitle;
 @synthesize cellDescr = _cellDescr;
-//@synthesize cellImage = _cellImage;
+@synthesize cellImage = _cellImage;
+@synthesize statusImage = _statusImage;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

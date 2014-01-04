@@ -14,7 +14,8 @@
 
 @interface TableCell : UITableViewCell
 @property (nonatomic, strong) id  delegate;
-//@property (weak, nonatomic) IBOutlet UIImageView *cellImage;
+@property (weak, nonatomic) IBOutlet UIImageView *cellImage;
 @property (weak, nonatomic) IBOutlet UILabel *cellTitle;
 @property (weak, nonatomic) IBOutlet UILabel *cellDescr;
+@property (weak, nonatomic) IBOutlet UIImageView *statusImage;
 @end

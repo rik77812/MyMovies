@@ -29,10 +29,17 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
   //9
-  [self.titoloOutlet setText:self.film.title];
-    [self.annoOutlet setText:[@"Anno: " stringByAppendingString: [NSString stringWithFormat:@"%ld", self.film.year]]];
-    [self.catOutlet setText:[@"Cat: " stringByAppendingString:[NSString stringWithFormat:@"%ld",self.film.cat]]];
-    [self.tramaOutlet  setText:film.trama];}
+    [self.titoloOutlet setText:self.film.title];
+    [self.annoOutlet setText:[@"Anno: " stringByAppendingString: [NSString stringWithFormat:@"%d", self.film.year]]];
+    [self.durataOutlet setText:[[NSString stringWithFormat:@"%d",self.film.durata]  stringByAppendingString:@" min."]];
+    [self.tramaOutlet  setText:film.trama];
+    [self.catOutlet setText:self.film.genere];
+    NSString * imagesPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *imagesExt = @".jpg";
+    NSString *imageName  = [NSString stringWithFormat:@"%@%@%@%@", imagesPath, @"/",self.film.cover, imagesExt];
+    UIImage *thumbNail = [UIImage imageWithContentsOfFile:imageName];
+    self.Locandina.image = thumbNail;
+}
 
 - (void)didReceiveMemoryWarning
 {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3400" systemVersion="13A603" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Titles" syncable="YES">
-        <attribute name="datDataChanged" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datDataChanged" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="intAddType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="intCoverHeight" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="intCoverWidth" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -10,10 +10,10 @@
         <attribute name="intRuntime" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="ntxDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nvcCover" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="nvcGenrs" optional="YES" syncable="YES"/>
+        <attribute name="nvcGenrs" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nvcLocalTitle" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Titles" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Titles" positionX="0" positionY="0" width="128" height="210"/>
     </elements>
 </model>

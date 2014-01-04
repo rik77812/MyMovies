@@ -13,8 +13,6 @@
 		8B2AD9601820FE4A00EF5ED9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B2AD95F1820FE4A00EF5ED9 /* CoreData.framework */; };
 		8B2AD9661820FE4A00EF5ED9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8B2AD9641820FE4A00EF5ED9 /* InfoPlist.strings */; };
 		8B2AD9681820FE4A00EF5ED9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD9671820FE4A00EF5ED9 /* main.m */; };
-		8B2AD96C1820FE4A00EF5ED9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD96B1820FE4A00EF5ED9 /* AppDelegate.m */; };
-		8B2AD96F1820FE4A00EF5ED9 /* MyMovies.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD96D1820FE4A00EF5ED9 /* MyMovies.xcdatamodeld */; };
 		8B2AD9711820FE4A00EF5ED9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B2AD9701820FE4A00EF5ED9 /* Images.xcassets */; };
 		8B2AD9781820FE4A00EF5ED9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B2AD9771820FE4A00EF5ED9 /* XCTest.framework */; };
 		8B2AD9791820FE4A00EF5ED9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B2AD9591820FE4A00EF5ED9 /* Foundation.framework */; };
@@ -22,6 +20,15 @@
 		8B2AD97B1820FE4A00EF5ED9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B2AD95F1820FE4A00EF5ED9 /* CoreData.framework */; };
 		8B2AD9831820FE4A00EF5ED9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8B2AD9811820FE4A00EF5ED9 /* InfoPlist.strings */; };
 		8B2AD9851820FE4A00EF5ED9 /* MyMoviesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD9841820FE4A00EF5ED9 /* MyMoviesTests.m */; };
+		8B2AD9921820FF3800EF5ED9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD9911820FF3800EF5ED9 /* AppDelegate.m */; };
+		8B2AD9951820FF5E00EF5ED9 /* DBStory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD9931820FF5E00EF5ED9 /* DBStory.xcdatamodeld */; };
+		8B2AD9AB182100C800EF5ED9 /* mainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD9A8182100C800EF5ED9 /* mainTableViewController.m */; };
+		8B2AD9B0182100E100EF5ED9 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B2AD9AD182100E100EF5ED9 /* Storyboard.storyboard */; };
+		8B2AD9B1182100E100EF5ED9 /* TableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD9AF182100E100EF5ED9 /* TableCell.m */; };
+		8B2AD9B3182101CC00EF5ED9 /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B2AD9B2182101CC00EF5ED9 /* red.png */; };
+		8B2AD9B5182101D500EF5ED9 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B2AD9B4182101D500EF5ED9 /* green.png */; };
+		8B2AD9B81821031800EF5ED9 /* Film.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD9B71821031800EF5ED9 /* Film.m */; };
+		8B2AD9BB1821037300EF5ED9 /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AD9BA1821037300EF5ED9 /* DetailVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,14 +52,25 @@
 		8B2AD9671820FE4A00EF5ED9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8B2AD9691820FE4A00EF5ED9 /* MyMovies-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MyMovies-Prefix.pch"; sourceTree = "<group>"; };
 		8B2AD96A1820FE4A00EF5ED9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		8B2AD96B1820FE4A00EF5ED9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		8B2AD96E1820FE4A00EF5ED9 /* MyMovies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyMovies.xcdatamodel; sourceTree = "<group>"; };
 		8B2AD9701820FE4A00EF5ED9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8B2AD9761820FE4A00EF5ED9 /* MyMoviesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyMoviesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B2AD9771820FE4A00EF5ED9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8B2AD9801820FE4A00EF5ED9 /* MyMoviesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MyMoviesTests-Info.plist"; sourceTree = "<group>"; };
 		8B2AD9821820FE4A00EF5ED9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8B2AD9841820FE4A00EF5ED9 /* MyMoviesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyMoviesTests.m; sourceTree = "<group>"; };
+		8B2AD9911820FF3800EF5ED9 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		8B2AD9941820FF5E00EF5ED9 /* DBStory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DBStory.xcdatamodel; sourceTree = "<group>"; };
+		8B2AD9A7182100C800EF5ED9 /* mainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mainTableViewController.h; sourceTree = "<group>"; };
+		8B2AD9A8182100C800EF5ED9 /* mainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mainTableViewController.m; sourceTree = "<group>"; };
+		8B2AD9AD182100E100EF5ED9 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		8B2AD9AE182100E100EF5ED9 /* TableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableCell.h; sourceTree = "<group>"; };
+		8B2AD9AF182100E100EF5ED9 /* TableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableCell.m; sourceTree = "<group>"; };
+		8B2AD9B2182101CC00EF5ED9 /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
+		8B2AD9B4182101D500EF5ED9 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green.png; sourceTree = "<group>"; };
+		8B2AD9B61821031800EF5ED9 /* Film.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Film.h; sourceTree = "<group>"; };
+		8B2AD9B71821031800EF5ED9 /* Film.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Film.m; sourceTree = "<group>"; };
+		8B2AD9B91821037300EF5ED9 /* DetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailVC.h; sourceTree = "<group>"; };
+		8B2AD9BA1821037300EF5ED9 /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,10 +133,20 @@
 		8B2AD9611820FE4A00EF5ED9 /* MyMovies */ = {
 			isa = PBXGroup;
 			children = (
+				8B2AD9A61820FFE800EF5ED9 /* images */,
 				8B2AD96A1820FE4A00EF5ED9 /* AppDelegate.h */,
-				8B2AD96B1820FE4A00EF5ED9 /* AppDelegate.m */,
+				8B2AD9911820FF3800EF5ED9 /* AppDelegate.m */,
+				8B2AD9B91821037300EF5ED9 /* DetailVC.h */,
+				8B2AD9BA1821037300EF5ED9 /* DetailVC.m */,
+				8B2AD9B61821031800EF5ED9 /* Film.h */,
+				8B2AD9B71821031800EF5ED9 /* Film.m */,
+				8B2AD9A7182100C800EF5ED9 /* mainTableViewController.h */,
+				8B2AD9A8182100C800EF5ED9 /* mainTableViewController.m */,
+				8B2AD9931820FF5E00EF5ED9 /* DBStory.xcdatamodeld */,
+				8B2AD9AD182100E100EF5ED9 /* Storyboard.storyboard */,
+				8B2AD9AE182100E100EF5ED9 /* TableCell.h */,
+				8B2AD9AF182100E100EF5ED9 /* TableCell.m */,
 				8B2AD9701820FE4A00EF5ED9 /* Images.xcassets */,
-				8B2AD96D1820FE4A00EF5ED9 /* MyMovies.xcdatamodeld */,
 				8B2AD9621820FE4A00EF5ED9 /* Supporting Files */,
 			);
 			path = MyMovies;
@@ -151,6 +179,15 @@
 				8B2AD9811820FE4A00EF5ED9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8B2AD9A61820FFE800EF5ED9 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				8B2AD9B4182101D500EF5ED9 /* green.png */,
+				8B2AD9B2182101CC00EF5ED9 /* red.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,6 +266,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B2AD9661820FE4A00EF5ED9 /* InfoPlist.strings in Resources */,
+				8B2AD9B0182100E100EF5ED9 /* Storyboard.storyboard in Resources */,
+				8B2AD9B5182101D500EF5ED9 /* green.png in Resources */,
+				8B2AD9B3182101CC00EF5ED9 /* red.png in Resources */,
 				8B2AD9711820FE4A00EF5ED9 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,9 +288,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B2AD96C1820FE4A00EF5ED9 /* AppDelegate.m in Sources */,
-				8B2AD96F1820FE4A00EF5ED9 /* MyMovies.xcdatamodeld in Sources */,
+				8B2AD9BB1821037300EF5ED9 /* DetailVC.m in Sources */,
+				8B2AD9921820FF3800EF5ED9 /* AppDelegate.m in Sources */,
 				8B2AD9681820FE4A00EF5ED9 /* main.m in Sources */,
+				8B2AD9B1182100E100EF5ED9 /* TableCell.m in Sources */,
+				8B2AD9951820FF5E00EF5ED9 /* DBStory.xcdatamodeld in Sources */,
+				8B2AD9AB182100C800EF5ED9 /* mainTableViewController.m in Sources */,
+				8B2AD9B81821031800EF5ED9 /* Film.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +495,7 @@
 				8B2AD98A1820FE4A00EF5ED9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8B2AD98B1820FE4A00EF5ED9 /* Build configuration list for PBXNativeTarget "MyMoviesTests" */ = {
 			isa = XCConfigurationList;
@@ -459,17 +504,18 @@
 				8B2AD98D1820FE4A00EF5ED9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		8B2AD96D1820FE4A00EF5ED9 /* MyMovies.xcdatamodeld */ = {
+		8B2AD9931820FF5E00EF5ED9 /* DBStory.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				8B2AD96E1820FE4A00EF5ED9 /* MyMovies.xcdatamodel */,
+				8B2AD9941820FF5E00EF5ED9 /* DBStory.xcdatamodel */,
 			);
-			currentVersion = 8B2AD96E1820FE4A00EF5ED9 /* MyMovies.xcdatamodel */;
-			path = MyMovies.xcdatamodeld;
+			currentVersion = 8B2AD9941820FF5E00EF5ED9 /* DBStory.xcdatamodel */;
+			path = DBStory.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
